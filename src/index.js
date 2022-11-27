@@ -123,7 +123,12 @@ async function handleHeadCommit(data) {
   let url = data.url;
   let message = data.message;
   let user = data.author.name;
-  let cardsNumbers = getCardNumbers(message);
+  const cardsNumbers = getCardNumbers(message);
+
+  if (!cardsNumbers) {
+    return;
+  }
+
   cardsNumbers.forEach(async cardNumber => {
     let card = await getCardOnBoard(trelloBoardId, cardNumber);
     if (card && card.length > 0) {
